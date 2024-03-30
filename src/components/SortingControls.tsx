@@ -1,7 +1,8 @@
-export default function Sorting() {
+import { FaSort } from "react-icons/fa6";
+export default function SortingControls() {
   return (
     <section className="sorting">
-      <i className="fa-solid fa-arrow-down-short-wide"></i>
+      <FaSort />
 
       <button className="sorting__button sorting__button--relevant">
         Relevant

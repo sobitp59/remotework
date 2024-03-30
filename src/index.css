@@ -189,10 +189,14 @@ body::-webkit-scrollbar {
 .logo {
   margin-left: -8px;
   user-select: none;
+  color: rgba(255, 255, 255, 0.727);
+  font-weight: 500;
 }
 
-.logo__img {
-  margin-bottom: -5px;
+.logo span {
+  font-weight: bold;
+  font-style: italic;
+  color: white;
 }
 
 /* BOOKMARKS BTN */
