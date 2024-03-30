@@ -3,6 +3,7 @@ import { IoSearch } from "react-icons/io5";
 type SearchFormProps = {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  // setSearchText: (searchText: string) => void;
 };
 export default function SearchForm({
   searchText,

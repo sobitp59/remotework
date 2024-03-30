@@ -3,7 +3,6 @@ import Background from "./Background";
 import Container from "./Container";
 import Footer from "./Footer";
 import Header, { HeaderTop } from "./Header";
-import { TJobItem } from "../types";
 import SearchForm from "./SearchForm";
 import Sidebar, { SidebarTop } from "./Sidebar";
 import JobItemContent from "./JobItemContent";
@@ -13,34 +12,11 @@ import Logo from "./Logo";
 import BookmarksButton from "./BookmarksButton";
 import ResultsCount from "./ResultsCount";
 import SortingControls from "./SortingControls";
+import { useJobItems } from "../lib/hooks";
 
 function App() {
   const [searchText, setSearchText] = useState("");
-  const [jobItems, setJobItems] = useState<TJobItem[]>([]);
-
-  useEffect(() => {
-    if (!searchText) return;
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
-        );
-
-        if (!response.ok) {
-          throw new Error();
-        }
-
-        const data = await response.json();
-        setJobItems(data?.jobItems);
-      } catch (error) {
-        console.log("Failed to fetch data [SEARCH FORM] ", error);
-        throw new Error("Something went wrong!!");
-      }
-    };
-
-    fetchData();
-  }, [searchText]);
+  const [JobItems, isLoading] = useJobItems(searchText);
 
   return (
     <>
@@ -64,7 +40,7 @@ function App() {
             <SortingControls />
           </SidebarTop>
 
-          <JobList jobItems={jobItems} />
+          <JobList jobItems={JobItems} isLoading={isLoading} />
           <PaginationControls />
         </Sidebar>
 
