@@ -17,3 +17,14 @@ export type TJobItemExtended = TJobItem & {
   coverImgURL: string;
   companyURL: string;
 };
+
+export type TJobItemApiResponse = {
+  public: boolean;
+  jobItem: TJobItemExtended;
+};
+
+export type TJobItemsApiResponse = {
+  public: boolean;
+  sorted: boolean;
+  jobItems: TJobItem[];
+};

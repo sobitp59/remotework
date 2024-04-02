@@ -13,16 +13,16 @@ import BookmarksButton from "./BookmarksButton";
 import ResultsCount from "./ResultsCount";
 import SortingControls from "./SortingControls";
 import { useDebounce, useJobItems } from "../lib/hooks";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   const [searchText, setSearchText] = useState("");
   const debouncedSearchText = useDebounce(searchText, 300);
 
-  const {
-    jobItemsSliced: JobItems,
-    isLoading,
-    totalJobItems,
-  } = useJobItems(debouncedSearchText);
+  const { jobItems, isLoading } = useJobItems(debouncedSearchText);
+
+  const totalJobItems = jobItems?.length || 0;
+  const jobItemsSliced = jobItems?.slice(0, 9) || [];
+
   return (
     <>
       {/* BACKGROUND */}
@@ -45,7 +45,7 @@ function App() {
             <SortingControls />
           </SidebarTop>
 
-          <JobList jobItems={JobItems} isLoading={isLoading} />
+          <JobList jobItems={jobItemsSliced} isLoading={isLoading} />
           <PaginationControls />
         </Sidebar>
 
@@ -54,6 +54,8 @@ function App() {
 
       {/* FOOTER */}
       <Footer />
+
+      <Toaster position="top-right" />
     </>
   );
 }
