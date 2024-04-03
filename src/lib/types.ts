@@ -31,3 +31,7 @@ export type TJobItemsApiResponse = {
 
 export type TSortBy = "relevant" | "recent";
 export type TPageDirection = "previous" | "next";
+
+export type TMouseEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+export type TFormEvent = React.FormEvent<HTMLFormElement>;
+export type TInputEvent = React.ChangeEvent<HTMLInputElement>;

@@ -151,3 +151,18 @@ export function useActiveId() {
 
   return activeJobId;
 }
+
+export const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>] => {
+  const [values, setValues] = useState(() =>
+    JSON.parse(localStorage.getItem(key) || JSON.stringify(initialValue))
+  );
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(values));
+  }, [values]);
+
+  return [values, setValues];
+};
