@@ -28,3 +28,6 @@ export type TJobItemsApiResponse = {
   sorted: boolean;
   jobItems: TJobItem[];
 };
+
+export type TSortBy = "relevant" | "recent";
+export type TPageDirection = "previous" | "next";

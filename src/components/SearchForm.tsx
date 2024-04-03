@@ -1,4 +1,4 @@
-import { IoSearch } from "react-icons/io5";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 type SearchFormProps = {
   searchText: string;
@@ -12,7 +12,7 @@ export default function SearchForm({
   return (
     <form action={"#"} onSubmit={(e) => e.preventDefault()} className="search">
       <button type="submit">
-        <IoSearch />
+        <MagnifyingGlassIcon />
       </button>
 
       <input
