@@ -6,7 +6,6 @@ import SearchForm from "./SearchForm";
 import Sidebar, { SidebarTop } from "./Sidebar";
 import JobItemContent from "./JobItemContent";
 import PaginationControls from "./PaginationControls";
-import JobList from "./JobList";
 import Logo from "./Logo";
 import BookmarksButton from "./BookmarksButton";
 import ResultsCount from "./ResultsCount";
