@@ -1,26 +1,21 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { TSortBy } from "../lib/types";
+import { useJobsContext } from "../contexts/JobsContextProvider";
 
-type SortingControlsProps = {
-  sortBy: TSortBy;
-  onClick: (newSortBy: TSortBy) => void;
-};
-export default function SortingControls({
-  sortBy,
-  onClick,
-}: SortingControlsProps) {
+export default function SortingControls() {
+  const { sortBy, handleSortBy } = useJobsContext();
   return (
     <section className="sorting">
       <CaretSortIcon />
       <SortingButton
-        onClick={() => onClick("relevant")}
+        onClick={() => handleSortBy("relevant")}
         sortBy={"relevant"}
         isActive={sortBy === "relevant"}
       >
         Relevant
       </SortingButton>
       <SortingButton
-        onClick={() => onClick("recent")}
+        onClick={() => handleSortBy("recent")}
         sortBy={"recent"}
         isActive={sortBy === "recent"}
       >

@@ -1,9 +1,10 @@
-import { useActiveId, useJobItem } from "../lib/hooks";
+import { useActiveIdContext } from "../contexts/ActiveIdContextProvider";
+import { useJobItem } from "../lib/hooks";
 import BookmarkIcon from "./BookmarkIcon";
 import Spinner from "./Spinner";
 
 export default function JobItemContent() {
-  const activeId = useActiveId();
+  const { activeId } = useActiveIdContext();
   const { jobItem, isLoading } = useJobItem(activeId);
 
   if (isLoading) {
@@ -80,7 +81,9 @@ export default function JobItemContent() {
             </div>
             <ul className="reviews__list">
               {jobItem.reviews.map((review) => (
-                <li className="reviews__item">{review}</li>
+                <li className="reviews__item" key={review}>
+                  {review}
+                </li>
               ))}
             </ul>
           </section>

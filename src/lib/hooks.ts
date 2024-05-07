@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { TJobItemApiResponse, TJobItemsApiResponse } from "./types";
+import {
+  TJobItemApiResponse,
+  TJobItemExtended,
+  TJobItemsApiResponse,
+} from "./types";
 import { BASE_API_URL } from "./constants";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { handleError } from "./utils";
 
 const fetchJobItem = async (id: number): Promise<TJobItemApiResponse> => {
@@ -38,6 +42,28 @@ export function useJobItem(id: number | null) {
   const jobItem = data?.jobItem;
   return { jobItem, isLoading: isInitialLoading } as const;
 }
+
+export function useJobItems(ids: number[]) {
+  const results = useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ["job-item", id],
+      queryFn: () => fetchJobItem(id),
+      staleTime: 1000 * 60 * 60,
+      enabled: Boolean(id),
+      refetchOnWindowFocus: false,
+      retry: false,
+      onError: handleError,
+    })),
+  });
+
+  const jobItems = results
+    .map((result) => result?.data?.jobItem)
+    ?.filter((item) => item !== undefined) as TJobItemExtended[];
+
+  const isLoading = results.some((item) => item.isLoading);
+  return { jobItems, isLoading } as const;
+}
+
 {
   /* 
 export function useJobItem(id: number | null) {
@@ -70,7 +96,7 @@ export function useJobItem(id: number | null) {
 */
 }
 
-export function useJobItems(value: string) {
+export function useSearchQuery(value: string) {
   const { data, isInitialLoading } = useQuery({
     queryKey: ["job-items", value],
     queryFn: () => (value ? fetchJobItems(value) : null),
@@ -165,4 +191,20 @@ export const useLocalStorage = <T>(
   }, [values]);
 
   return [values, setValues];
+};
+
+export const useClickOutside = (
+  refs: React.RefObject<HTMLElement>[],
+  handler: () => void
+) => {
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (refs.every((ref) => !ref.current?.contains(e.target as Node))) {
+        handler();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [refs, handler]);
 };
